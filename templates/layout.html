@@ -1,11 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  {% if title %}
+        <title>{{ title }}</title>
+  {% else %}
+        <title>Welcome to Ipaid!</title>
+  {% endif %}
   <title>Home page</title>
   <!--  for bootstrap 4-->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
-  <!--  for java vue-->
+  <!--  for java vu11e-->
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 </head>
 
@@ -25,6 +30,9 @@
         <ul class="navbar-nav">
           <li class="nav-item">
             <a class="nav-link" href="/login"> Log in </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/event"> Event </a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="/register"> Register </a>

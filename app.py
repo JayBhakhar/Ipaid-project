@@ -7,7 +7,7 @@ db = SQLAlchemy(app)
 
 
 class Client(db.Model):
-    sr_no = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True)
     full_name = db.Column(db.String(20), primary_key=False)
     email = db.Column(db.String(20), primary_key=False)
     country_code = db.Column(db.String(3), primary_key=False)
@@ -23,7 +23,7 @@ def Home():
 
 @app.route('/login')
 def login():
-    return render_template("Login.html")
+    return render_template("Login.html",title='log in')
 
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -38,7 +38,11 @@ def register():
                            password=password)
         db.session.add(add_entry)
         db.session.commit()
-    return render_template("register.html")
+    return render_template("register.html", title='register')
+
+@app.route('/event')
+def event():
+    render_template("event.html",title='Event')
 
 
 app.run(debug=True)
