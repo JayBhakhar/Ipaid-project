@@ -6,34 +6,53 @@
 <div class="container">
   <div class="row">
       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">
-        <h2>Contact</h2>
+        <h2>Happy Moment</h2>
       </div>
   </div>
   <div class="row">
       <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xs-offset-3">
-          <form id="contact-form" class="form" action="#" method="POST" role="form">
+          <form id="contact-form" class="form" action="/event" method="POST" role="form">
               <div class="form-group">
-                  <label class="form-label" for="name">Your Name</label>
-                  <input type="text" class="form-control" id="name" name="name" placeholder="Your name" tabindex="1" required>
+                  <label class="form-label" for="eventname">Event Name</label>
+                  <input type="text" class="form-control" id="eventname" name="event_name" placeholder="Event Name" tabindex="1" required>
               </div>
               <div class="form-group">
-                  <label class="form-label" for="email">Your Email</label>
-                  <input type="email" class="form-control" id="email" name="email" placeholder="Your Email" tabindex="2" required>
+                  <label class="form-label" for="eventplace">Event Place</label>
+                  <input type="text" class="form-control" id="eventplace" name="event_place" placeholder="Event Place" tabindex="2" required>
               </div>
               <div class="form-group">
-                  <label class="form-label" for="subject">Subject</label>
-                  <input type="text" class="form-control" id="subject" name="subject" placeholder="Subject" tabindex="3">
+                  <label class="form-label" for="event_type">Event Type</label>
+                  <select id="event_type" name="event_type" tabindex="3" class="custom-select" style="max-width: 275px;">
+                    <option selected="" value="1"> Restaurants / Cafe </option>
+                    <option value="2"> Purchase </option>
+                    <option value="3"> Borrow </option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                  </select>
+              </div>
+              <div class="form-group">
+                  <label class="form-label" for="quatity">NO. of peoples</label>
+                  <select id="quatity" name="quatity" tabindex="4" class="custom-select" style="max-width: 175px;">
+                    <option selected="" value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                  </select>
               </div>
               <div class="form-group">
                   <label class="form-label" for="message">Message</label>
-                  <textarea rows="5" cols="50" name="message" class="form-control" id="message" placeholder="Message..." tabindex="4" required></textarea>
+                  <textarea rows="5" cols="50" name="message" class="form-control" id="message" placeholder="Message..." tabindex="5" required></textarea>
               </div>
               <div class="text-center">
-                  <button type="submit" class="btn btn-start-order">Send Message</button>
+                  <button type="submit" class="btn btn-start-order info">!! DONE ENTRY !!</button>
               </div>
           </form>
       </div>
   </div>
 </div>
+
 <script src="{{ url_for('static', filename='js/event.js')}}"></script>
 {% endblock %}
