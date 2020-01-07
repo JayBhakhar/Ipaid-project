@@ -15,6 +15,7 @@ class Client(db.Model):
     country_code = db.Column(db.String(3), nullable=True)
     phone_no = db.Column(db.String(10), nullable=True)
     password = db.Column(db.String(20), nullable=True)
+    print(1)
 
     def __init__(self, full_name, email, country_code, phone_no, password):
         self.full_name = full_name
