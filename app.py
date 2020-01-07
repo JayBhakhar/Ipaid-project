@@ -6,39 +6,40 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///Ipaid.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
+
 class Client(db.Model):
-   __tablename__= 'client'
-   id = db.Column(db.Integer, primary_key=True,autoincrement=True)
-   full_name = db.Column(db.String(20), nullable=True)
-   email = db.Column(db.String(20), nullable=True)
-   country_code = db.Column(db.String(3), nullable=True)
-   phone_no = db.Column(db.String(10), nullable=True)
-   password = db.Column(db.String(20), nullable=True)
+    __tablename__ = 'client'
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    full_name = db.Column(db.String(20), nullable=True)
+    email = db.Column(db.String(20), nullable=True)
+    country_code = db.Column(db.String(3), nullable=True)
+    phone_no = db.Column(db.String(10), nullable=True)
+    password = db.Column(db.String(20), nullable=True)
 
-   def __init__(self, full_name, email, country_code, phone_no, password):
-      self.full_name = full_name
-      self.email = email
-      self.country_code = country_code
-      self.phone_no = phone_no
-      self.password = password
-
+    def __init__(self, full_name, email, country_code, phone_no, password):
+        self.full_name = full_name
+        self.email = email
+        self.country_code = country_code
+        self.phone_no = phone_no
+        self.password = password
 
 
 class Event(db.Model):
-   __tablename__= 'event'
-   id = db.Column(db.Integer, primary_key=True,autoincrement=True)
-   event_name = db.Column(db.String(20), nullable=True)
-   event_place = db.Column(db.String(20), nullable=True)
-   message = db.Column(db.String(3), nullable=True)
-   event_type = db.Column(db.String(10), nullable=True)
-   no_of_peoples = db.Column(db.String(20), nullable=True)
+    __tablename__ = 'event'
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    event_name = db.Column(db.String(20), nullable=True)
+    event_place = db.Column(db.String(20), nullable=True)
+    message = db.Column(db.String(3), nullable=True)
+    event_type = db.Column(db.String(10), nullable=True)
+    no_of_peoples = db.Column(db.String(20), nullable=True)
 
-   def __init__(self, event_name, event_place, message, event_type, no_of_peoples):
-      self.event_name = event_name
-      self.event_place = event_place
-      self.message = message
-      self.event_type = event_type
-      self.no_of_peoples = no_of_peoples
+    def __init__(self, event_name, event_place, message, event_type, no_of_peoples):
+        self.event_name = event_name
+        self.event_place = event_place
+        self.message = message
+        self.event_type = event_type
+        self.no_of_peoples = no_of_peoples
+
 
 # db.create_all()
 
@@ -77,7 +78,8 @@ def event():
         message = request.form.get('message')
         no_of_peoples = request.form.get('quatity')
         event_type = request.form.get('event_type')
-        entry = Event(event_name=event_name, event_place=event_place, message=message, no_of_peoples=no_of_peoples, event_type=event_type)
+        entry = Event(event_name=event_name, event_place=event_place, message=message, no_of_peoples=no_of_peoples,
+                      event_type=event_type)
         db.session.add(entry)
         db.session.commit()
     return render_template("event.html", title='Event')
