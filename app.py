@@ -1,3 +1,4 @@
+from werkzeug.security import generate_password_hash, check_password_hash
 from flask import Flask, render_template, request
 from flask_sqlalchemy import SQLAlchemy
 
@@ -15,7 +16,7 @@ class Client(db.Model):
     country_code = db.Column(db.String(3), nullable=True)
     phone_no = db.Column(db.String(10), nullable=True)
     password = db.Column(db.String(20), nullable=True)
-    print(1)
+
 
     def __init__(self, full_name, email, country_code, phone_no, password):
         self.full_name = full_name
@@ -50,9 +51,24 @@ def home():
     return render_template("main.html")
 
 
-@app.route('/login')
+@app.route('/login', methods=['GET', 'POST'])
 def login():
-    return render_template("Login.html", title='log in')
+    message = None
+    if request.method == 'POST':
+        email = request.form.get('email')
+        password = request.form.get('password')
+        existing_client = Client.query.filter_by(email=email).first()
+        if existing_client:
+            passwords_match = check_password_hash(existing_client.password, password)
+            if passwords_match:
+
+                message = "client exist"
+            else:
+                message = "Please check your password"
+        else:
+            message = "client does not exist"
+
+    return render_template("Login.html", title='log in', message=message)
 
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -63,7 +79,7 @@ def register():
             email=request.form.get('email'),
             country_code=request.form.get('country_code'),
             phone_no=request.form.get('phone'),
-            password=request.form.get('password')
+            password=generate_password_hash(request.form.get('password'))
         )
 
         db.session.add(entry)
