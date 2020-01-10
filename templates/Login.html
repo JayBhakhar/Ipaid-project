@@ -9,16 +9,32 @@
     <form class="form-login" method="post" action="/login">
       <img class="mb-4" src="{{ url_for('static', filename='image/mainlogo.jpg')}}" alt="" width="72" height="72">
       <h1 class="h3 mb-3 font-weight-normal">Log In</h1>
-      <label for="inputEmail" class="sr-only"></label>
-      <input name='email' type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
-      <label for="inputPassword" class="sr-only"></label>
-      <input name="password" type="password" id="inputPassword" class="form-control" placeholder="Password" required>
-      <div class="checkbox mb-3">
-        <label>
-          <input name="remember_me" type="checkbox" value="remember-me"> Remember me
-        </label>
+      {% if form.email.errors %}
+          {{ form.email(class="form-control form-control-lg is-invalid") }}
+          <div class="invalid-feedback">
+              {% for error in form.email.errors %}
+                  <span>{{ error }}</span>
+              {% endfor %}
+          </div>
+      {% else %}
+          {{ form.email(class="form-control", placeholder="Email address") }}
+      {% endif %}
+
+      {% if form.password.errors %}
+          {{ form.password(class="form-control form-control-lg is-invalid") }}
+          <div class="invalid-feedback">
+              {% for error in form.password.errors %}
+                  <span>{{ error }}</span>
+              {% endfor %}
+          </div>
+      {% else %}
+          {{ form.password(class="form-control", placeholder="Password") }}
+      {% endif %}
+      <div class="form-check">
+        {{ form.remember(class="form-check-input") }}
+        {{ form.remember.label(class="form-check-label") }}
       </div>
-      <button class="btn btn-lg btn-primary btn-block" type="submit">Log in</button>
+      {{ form.submit(class='btn btn-lg btn-primary btn-block') }}
     </form>
     {% if message %}
       <p>{{message}}</p>

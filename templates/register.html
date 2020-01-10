@@ -8,13 +8,31 @@
             <div class="input-group-prepend">
                 <span class="input-group-text"> <i class="fa fa-user"></i> </span>
              </div>
-            <input name="full_name" class="form-control" placeholder="Full name" type="text">
+            {% if form.username.errors %}
+                {{ form.username(class="form-control form-control-lg is-invalid") }}
+                <div class="invalid-feedback">
+                    {% for error in form.username.errors %}
+                        <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+            {% else %}
+                {{ form.username(class="form-control", placeholder="Full name") }}
+            {% endif %}
         </div> <!-- form-group// -->
         <div class="form-group input-group">
             <div class="input-group-prepend">
                 <span class="input-group-text"> <i class="fa fa-envelope"></i> </span>
              </div>
-            <input name="email" class="form-control" placeholder="Email address" type="email">
+            {% if form.email.errors %}
+                {{ form.email(class="form-control form-control-lg is-invalid") }}
+                <div class="invalid-feedback">
+                    {% for error in form.email.errors %}
+                        <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+            {% else %}
+                {{ form.email(class="form-control", placeholder="Email address") }}
+            {% endif %}
         </div> <!-- form-group// -->
         <div class="form-group input-group">
             <div class="input-group-prepend">
@@ -24,23 +42,50 @@
                 <option selected="" value="+91">+91</option>
                 <option value="+7">+7</option>
             </select>
-            <input name="phone" class="form-control" placeholder="Phone number" type="text">
+            {% if form.phone_no.errors %}
+                {{ form.phone_no(class="form-control form-control-lg is-invalid") }}
+                <div class="invalid-feedback">
+                    {% for error in form.phone_no.errors %}
+                        <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+            {% else %}
+                {{ form.phone_no(class="form-control", placeholder="Phone number") }}
+            {% endif %}
         </div> <!-- form-group// -->
         <div class="form-group input-group">
             <div class="input-group-prepend">
                 <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
             </div>
-            <input name="password" class="form-control" placeholder="Create password" type="password">
+            {% if form.password.errors %}
+                {{ form.password(class="form-control form-control-lg is-invalid") }}
+                <div class="invalid-feedback">
+                    {% for error in form.password.errors %}
+                        <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+            {% else %}
+                {{ form.password(class="form-control", placeholder="Create password") }}
+            {% endif %}
         </div> <!-- form-group// -->
         <div class="form-group input-group">
             <div class="input-group-prepend">
                 <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
             </div>
-            <input name="password_repeat" class="form-control" placeholder="Repeat password" type="password">
+            {% if form.password_repeat.errors %}
+                {{ form.password_repeat(class="form-control form-control-lg is-invalid") }}
+                <div class="invalid-feedback">
+                    {% for error in form.password_repeat.errors %}
+                        <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+            {% else %}
+                {{ form.password_repeat(class="form-control", placeholder="Repeat password") }}
+            {% endif %}
         </div> <!-- form-group// -->                                      
         <div class="form-group">
-            <button type="submit" class="btn btn-primary btn-block"> Create Account  </button>
-        </div> <!-- form-group// -->      
+            {{ form.submit(class="btn btn-primary btn-block") }}
+        </div> <!-- form-group// -->
         <p class="text-center">Have an account? <a href="/login">Log In</a> </p>                                                                 
         </form>
     </article>

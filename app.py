@@ -1,10 +1,13 @@
 from werkzeug.security import generate_password_hash, check_password_hash
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, url_for, flash
 from flask_sqlalchemy import SQLAlchemy
+from werkzeug.utils import redirect
+from form import RegistrationForm, LoginForm
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///Ipaid.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['SECRET_KEY'] = '5791628bb0b13ce0c676dfde280ba245'
 db = SQLAlchemy(app)
 
 
@@ -25,6 +28,9 @@ class Client(db.Model):
         self.phone_no = phone_no
         self.password = password
 
+    def __repr__(self):
+        return f"Client('{self.full_name}', '{self.email}', '{self.country_code}', '{self.phone_no}', '{self.password}')"
+
 
 class Event(db.Model):
     __tablename__ = 'event'
@@ -42,8 +48,8 @@ class Event(db.Model):
         self.event_type = event_type
         self.no_of_peoples = no_of_peoples
 
-
-# db.create_all()
+    def __repr__(self):
+        return f"Event('{self.event_name}', '{self.event_place}', '{self.message}', '{self.event_type}', '{self.no_of_peoples}')"
 
 
 @app.route('/')
@@ -53,6 +59,7 @@ def home():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    form = LoginForm()
     message = None
     if request.method == 'POST':
         email = request.form.get('email')
@@ -61,30 +68,33 @@ def login():
         if existing_client:
             passwords_match = check_password_hash(existing_client.password, password)
             if passwords_match:
-
                 message = "client exist"
             else:
                 message = "Please check your password"
         else:
             message = "client does not exist"
 
-    return render_template("Login.html", title='log in', message=message)
+    return render_template("Login.html", title='log in', message=message, form=form)
+
 
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
-    if request.method == 'POST':
+    form = RegistrationForm()
+    if form.validate_on_submit() and request.method == 'POST':
+    # if form.validate_on_submit():
+    # if request.method == 'POST':
         entry = Client(
-            full_name=request.form.get('full_name'),
+            full_name=request.form.get('username'),
             email=request.form.get('email'),
             country_code=request.form.get('country_code'),
-            phone_no=request.form.get('phone'),
+            phone_no=request.form.get('phone_no'),
             password=generate_password_hash(request.form.get('password'))
         )
-
         db.session.add(entry)
         db.session.commit()
-    return render_template("register.html", title='register')
+        return redirect(url_for('home'))
+    return render_template("register.html", title='register',form=form)
 
 
 @app.route('/event', methods=['GET', 'POST'])
