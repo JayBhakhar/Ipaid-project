@@ -81,16 +81,14 @@ def login():
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     form = RegistrationForm()
-    if form.validate_on_submit() and request.method == 'POST':
-    # if form.validate_on_submit():
-    # if request.method == 'POST':
+    if form.validate_on_submit():
         entry = Client(
             full_name=request.form.get('username'),
             email=request.form.get('email'),
             country_code=request.form.get('country_code'),
             phone_no=request.form.get('phone_no'),
             password=generate_password_hash(request.form.get('password'))
-        )
+            )
         db.session.add(entry)
         db.session.commit()
         return redirect(url_for('home'))

@@ -4,6 +4,7 @@
 <div class="card bg-light">
     <article class="card-body mx-auto" style="max-width: 400px;">
         <form method="POST" action="/register">
+        {{ form.hidden_tag() }}
         <div class="form-group input-group">
             <div class="input-group-prepend">
                 <span class="input-group-text"> <i class="fa fa-user"></i> </span>
