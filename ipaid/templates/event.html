@@ -1,0 +1,58 @@
+{% extends "layout.html" %}
+{% block body %}
+
+<link href="{{ url_for('static', filename='css/event.css')}}" rel="stylesheet">
+
+<div class="container">
+  <div class="row">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">
+        <h2>Happy Moment</h2>
+      </div>
+  </div>
+  <div class="row">
+      <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xs-offset-3">
+          <form id="contact-form" class="form" action="/event" method="POST" role="form">
+              <div class="form-group">
+                  <label class="form-label" for="eventname">Event Name</label>
+                  <input type="text" class="form-control" id="eventname" name="event_name" placeholder="Event Name" tabindex="1" required>
+              </div>
+              <div class="form-group">
+                  <label class="form-label" for="eventplace">Event Place</label>
+                  <input type="text" class="form-control" id="eventplace" name="event_place" placeholder="Event Place" tabindex="2" required>
+              </div>
+              <div class="form-group">
+                  <label class="form-label" for="event_type">Event Type</label>
+                  <select id="event_type" name="event_type" tabindex="3" class="custom-select" style="max-width: 275px;">
+                    <option selected="" value="Restaurants / Cafe"> Restaurants / Cafe </option>
+                    <option value="Purchase"> Purchase </option>
+                    <option value="Borrow"> Borrow </option>
+<!--                    <option value="4">4</option>-->
+<!--                    <option value="5">5</option>-->
+<!--                    <option value="6">6</option>-->
+                  </select>
+              </div>
+              <div class="form-group">
+                  <label class="form-label" for="quatity">NO. of peoples</label>
+                  <select id="quatity" name="quatity" tabindex="4" class="custom-select" style="max-width: 175px;">
+                    <option selected="" value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                  </select>
+              </div>
+              <div class="form-group">
+                  <label class="form-label" for="message">Message</label>
+                  <textarea rows="5" cols="50" name="message" class="form-control" id="message" placeholder="Message..." tabindex="5" required></textarea>
+              </div>
+              <div class="text-center">
+                  <button type="submit" class="btn btn-start-order info">!! DONE ENTRY !!</button>
+              </div>
+          </form>
+      </div>
+  </div>
+</div>
+
+<script src="{{ url_for('static', filename='js/event.js')}}"></script>
+{% endblock %}

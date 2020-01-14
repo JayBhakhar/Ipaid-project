@@ -1,0 +1,45 @@
+{% extends "layout.html" %}
+{% block body %}
+
+    <title>Log In</title>
+    <!-- Custom styles for this template -->
+    <link href="{{ url_for('static', filename='css/Login.css')}}" rel="stylesheet">
+
+  <div class="text-center">
+    <form class="form-login" method="post" action="/login">
+      {{ form.hidden_tag() }}
+      <img class="mb-4" src="{{ url_for('static', filename='image/mainlogo.jpg')}}" alt="" width="72" height="72">
+      <h1 class="h3 mb-3 font-weight-normal">Log In</h1>
+      {% if form.email.errors %}
+          {{ form.email(class="form-control form-control-lg is-invalid") }}
+          <div class="invalid-feedback">
+              {% for error in form.email.errors %}
+                  <span>{{ error }}</span>
+              {% endfor %}
+          </div>
+      {% else %}
+          {{ form.email(class="form-control", placeholder="Email address") }}
+      {% endif %}
+
+      {% if form.password.errors %}
+          {{ form.password(class="form-control form-control-lg is-invalid") }}
+          <div class="invalid-feedback">
+              {% for error in form.password.errors %}
+                  <span>{{ error }}</span>
+              {% endfor %}
+          </div>
+      {% else %}
+          {{ form.password(class="form-control", placeholder="Password") }}
+      {% endif %}
+      <div class="form-check">
+        {{ form.remember_me(class="form-check-input") }}
+        {{ form.remember_me.label(class="form-check-label") }}
+      </div>
+      {{ form.submit(class='btn btn-lg btn-primary btn-block') }}
+    </form>
+    {% if message %}
+      <p>{{message}}</p>
+    {% endif %}
+  </div>
+
+{% endblock%}
