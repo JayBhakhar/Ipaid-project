@@ -33,7 +33,7 @@
               </div>
               <div class="form-group">
                   <label class="form-label" for="quatity">NO. of peoples</label>
-                  <select id="quatity" name="quatity" tabindex="4" class="custom-select" style="max-width: 175px;">
+                  <select onchange="quantity_change()" id="quatity" name="quatity" tabindex="4" class="custom-select" style="max-width: 175px;">
                     <option selected="" value="1">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>
@@ -42,9 +42,12 @@
                     <option value="6">6</option>
                   </select>
               </div>
+              <div class="form-group" id="partners">
+                <textarea rows="1" name="partner_1" class="form-control" tabindex="5" required></textarea>
+              </div>
               <div class="form-group">
                   <label class="form-label" for="message">Message</label>
-                  <textarea rows="5" cols="50" name="message" class="form-control" id="message" placeholder="Message..." tabindex="5" required></textarea>
+                  <textarea rows="5" cols="50" name="message" class="form-control" id="message" placeholder="Message..." tabindex="6" required></textarea>
               </div>
               <div class="text-center">
                   <button type="submit" class="btn btn-start-order info">!! DONE ENTRY !!</button>
@@ -54,5 +57,11 @@
   </div>
 </div>
 
-<script src="{{ url_for('static', filename='js/event.js')}}"></script>
+<script src="{{ url_for('static', filename='js/event.js')}}">
+function quantity_change() {
+  //get quantity
+  //remove all textareas from partners
+  //add quantity textareas as a child of partners
+}
+</script>
 {% endblock %}

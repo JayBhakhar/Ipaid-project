@@ -1,7 +1,6 @@
 from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask import render_template, request, url_for
-from werkzeug.urls import url_parse
 from ipaid.form import RegistrationForm, LoginForm
 from ipaid.models import Client, Event
 from werkzeug.utils import redirect
@@ -10,8 +9,8 @@ from ipaid import app, db
 
 @app.route('/')
 def home():
-    user = Client.query.filter_by().first()
-    login_user(user)
+    # user = Client.query.filter_by().first()
+    # login_user(user)
     return render_template("main.html")
 
 
@@ -26,12 +25,8 @@ def login():
         if existing_client:
             passwords_match = check_password_hash(existing_client.password, password)
             if passwords_match:
-                message = "client exist"
                 login_user(existing_client, remember=form.remember_me.data)
-                next_page = request.args.get('next')
-                if not next_page or url_parse(next_page).netloc != '':
-                    next_page = url_for('home')
-                return redirect(next_page)
+                return redirect(url_for('home'))
             else:
                 message = "Please check your password"
         else:
@@ -39,9 +34,10 @@ def login():
     return render_template("Login.html", title='log in', message=message, form=form)
 
 
-
 @app.route('/register', methods=['GET', 'POST'])
 def register():
+    if current_user.is_authenticated:
+        return redirect(url_for('home'))
     form = RegistrationForm()
     if form.validate_on_submit():
         entry = Client(
@@ -58,8 +54,9 @@ def register():
 
 
 @app.route('/event', methods=['GET', 'POST'])
-@login_required
 def event():
+    if not current_user.is_authenticated:
+        return redirect(url_for('login'))
     if request.method == 'POST':
         event_name = request.form.get('event_name')
         event_place = request.form.get('event_place')
@@ -67,7 +64,7 @@ def event():
         no_of_peoples = request.form.get('quatity')
         event_type = request.form.get('event_type')
         entry = Event(event_name=event_name, event_place=event_place, message=message, no_of_peoples=no_of_peoples,
-                      event_type=event_type)
+                      event_type=event_type, client_id = current_user.id)
         db.session.add(entry)
         db.session.commit()
     return render_template("event.html", title='Event')

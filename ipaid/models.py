@@ -23,6 +23,7 @@ class Client(db.Model, UserMixin):
 class Event(db.Model, UserMixin):
     __tablename__ = 'event'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    client_id = db.Column(db.Integer, db.ForeignKey('client.id'))
     event_name = db.Column(db.String(20), nullable=True)
     event_place = db.Column(db.String(20), nullable=True)
     message = db.Column(db.String(3), nullable=True)
@@ -37,3 +38,4 @@ class Event(db.Model, UserMixin):
 @login_manager.user_loader
 def load_user(user_id):
     return Client.query.get(int(user_id))
+
